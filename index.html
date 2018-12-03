@@ -1,12 +1,345 @@
 <html>
-    <head>
-        <title>Storytelling project</title>
-        <script src="d3.js"></script>
-    </head>
-    <body>
-        <div>My amazing page will goes here</div>
-    </body>
-    <script>
-        console.log(d3);
-    </script>
+<head>
+	<title>40 Years of Competitive History in La Liga</title>
+
+	<link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet'>
+
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+
+	<style>
+	body {
+		background-color: ghostwhite;
+		
+	}
+	.page {
+		overflow: auto;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+	}
+	.main {
+		padding: 1%;
+		float: left;
+	}
+	.main h2 {
+		font-family: 'Arimo';
+	}
+	
+	.left {
+		padding: 1%;
+		width: 60%;
+	}
+	.right {
+		padding: 1%;
+		width: 40%;
+	}
+	.data-circle {
+	fill: red;     
+}
+.data-line {
+  fill: none;
+  stroke: #3C92BA;
+  stroke-width: 4px;
+}
+.line-circle{
+	fill:none;
+}
+
+	/* Clear floats after the columns */
+	.row:after {
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
+	.header {
+		font-family: 'Anton'; font-size: 60px; color: #152935;
+	}
+	.subheader {
+		font-family: 'Arimo'; font-size: 20px; color: #5a6872; font-style: italic;
+	}
+	.authors {
+		font-family: 'Arimo'; font-size: 14px; color: #5a6872;
+	}
+	.fill {
+		background-color: black;
+	}
+	p {
+		font-family: 'Arimo'; font-size: 16px; color: #152935; line-height: 30px;
+	}
+
+	/* Chart */
+	.bar {
+      fill: #30588c;
+    }
+
+    .bar:hover {
+      fill: #3d70b2;
+    }
+
+    .label {
+      fill: black;
+      font: 12px sans-serif;
+    }
+
+	.line{
+		fill: none;
+		stroke: rebeccapurple;
+	}
+	.dot {
+    stroke: #000;
+    fill:rebeccapurple;
+    }
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 38px;
+  pointer-events: none;
+  background: lightsteelblue;
+  border: 0px;		
+  border-radius: 5px;
+}
+
+
+
+	</style>
+
+<link rel="shortcut icon"  href="la_liga.ico" type="image/x-icon" />
+</head>
+
+<body>
+	<div class='main'>
+		<div class='main-left'>
+		<h1 class='header'>40 Years of Competitive History in the Spanish Top Flight</h1>
+		<h2 class='subheader'>Visualizing different metrics of competitiveness in Spain's first division, La Liga</h2>
+		<h3 class='authors'>Peter Xenopoulos, Stefan Cherubin</h3>
+
+		<br>
+
+		<p>Spain's La Liga is one of the most popular soccer leagues in the world, hosting both perennial giants Barcelona and Real Madrid, 
+			as well as more recent contenders such as Atletico Madrid. 
+			In fact, these three teams have taken the top 3 positions since the 2012-2013 season. 
+			We have to go back to the 2003-2004 season to see a top three that didn't contain both Barcelona and Real Madrid. 
+			In fact, since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20), 
+			with either Barcelona or Madrid winning the league 66 percent of the time. In earlier years, either of those two teams would win 80 percent of the time.</p>
+
+		</div>
+		<h2># of La Liga Titles (As of 2018)</h2>
+		<svg id = "titles"></svg>
+		<div class='compBody'>
+			<h2>Competitiveness of La Liga Since 1970</h2>
+			<svg id ="comp"></svg>
+			<p>Note: Lower Competitiveness means that there were less teams who consistently dominated the league</p>
+			<p>Since 2002, the top 3 teams have included either Barcelona or Real Madrid</p>
+		</div>
+	</div>
+	<script>
+			var margin = {
+			top: 30,
+			right: 20,
+			bottom: 30,
+			left: 150
+		  };
+		var width = 750 - margin.left - margin.right;
+		var height = 400 - margin.top - margin.bottom;
+	
+		var svg = d3.select("#titles")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			  .append("g")
+			.attr("transform", "translate(" + margin.left + "," +  margin.top + ")")
+			.attr("align", "bottom");
+	
+		var x = d3.scaleLinear()
+			  .range([0, width]);
+	
+		var y = d3.scaleBand()
+			.range([height, 0]);
+	
+		var xAxis = d3.axisBottom(x)
+			//.tickValues([1, 2, 4, 18, 21]);
+	
+		var yAxis = d3.axisLeft(y);
+	
+		d3.tsv("titles.tsv", type, function(error, data) {
+		  if (error) throw error;
+	
+		  x.domain([0, d3.max(data, function(d) { return d.titles; })]);
+	
+		  y.domain(data.map(function(d) { return d.club; }))
+			.paddingInner(0.1)
+			.paddingOuter(0.5);
+	
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis)
+			.append("text")
+			  .attr("class", "label")
+			  .attr("transform", "translate(" + width + ",0)")
+			  .attr("y", -5)
+			  .style("text-anchor", "end")
+			  .text("Number of Titles");
+	
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis).append("text")
+			  .attr("class", "label")
+			  .attr("transform", "translate(" + -15 + ",0)")
+			  .attr("x", 0)
+			  .style("text-anchor", "end")
+			  .text("Club Name");
+	
+		  svg.selectAll(".bar")
+			  .data(data)
+			.enter().append("rect")
+			  .attr("class", "bar")
+			  .attr("x", 0)
+			  .attr("height", y.bandwidth())
+			  .attr("y", function(d) { return y(d.club); })
+			  .attr("width", function(d) { return x(d.titles); })
+			  .on("mouseover", function(d) {
+				tooltip.transition()
+					 .duration(200)
+					 .style("opacity", 1.0);
+					 tooltip.html("Wins: " + d.titles )
+					 .style("left", (d3.event.pageX + 5) + "px")
+					 .style("top", (d3.event.pageY - 28) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					 .duration(500)
+					 .style("opacity", 0);
+			});
+	
+			});
+	
+			var parseTime = d3.timeParse("%Y");
+			
+			var xValue = function(d){ return d.season; };
+			
+			var axisXLine = d3.scaleLinear()
+				//.domain(d3.extent(data, d => d.season))
+				.range([0,width]);
+	
+			var XAxis = d3.axisBottom(axisXLine).tickFormat(d3.format("d"));
+			
+			var yValue = function(d){return d.comp; };
+	
+			var axisYLine = d3.scaleLinear()
+				.range([height, 0]);
+	
+			var YAxis = d3.axisLeft(axisYLine);
+			
+			var tooltip = d3.select("body").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+	
+			var compBody = d3.select("#comp")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+				.html('<div style="width: 160px;"><p>Old text old text old text old text old text old text<p></div>');
+	
+			var valueline = d3.line()
+				.x(d => axisXLine(d.season))
+				.y(d => axisYLine(d.comp));
+	
+			var g = compBody.append("g");
+				
+			
+				
+				
+	
+			d3.tsv("competitive_measures.tsv", type, function(err, data){
+				if (err) throw err;
+	
+				data.forEach(function(d){
+					d.season = d.season,
+					d.comp = +d.comp,
+					d.sd_ppm = +d.sd_ppm
+				});
+				
+	
+				//var maxComp = d3.max(data, d => d.comp);
+				axisXLine.domain(d3.extent(data, function(d) {return d.season;}));
+	
+				
+				//.domain([0,maxComp]);
+				axisYLine.domain([0, d3.max(data, function(d) {return d.comp;})]);
+				
+				
+	
+				compBody.append("g")
+				.attr("class", "y axis")
+				.call(YAxis)
+				.append("text")
+				.attr("class", "label")
+				.attr("transform", "translate(" + -15 + ",0)")
+				.attr("x", 0)
+				.style("text-anchor", "end")
+				.text("Competiveness");
+	
+				compBody.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(XAxis)
+				.append("text")
+				.attr("class", "label")
+				.attr("transform", "translate(" + width + ",0)")
+				.attr("y", -5)
+				.style("text-anchor", "end")
+				.text("Year");
+				
+	
+				compBody.append("path")
+				.datum(data)
+				.attr("class", "line")
+				.attr("d", valueline)
+				.attr("x", function(d) { return axisXLine(d.season); })
+				.attr("y", function(d) { return axisYLine(d.comp); });
+				//.attr("width", function(d) { return x(d.season); });
+	
+				var lineAndDots = g.append("g")
+				.attr("class", "line-and-dots");
+				//.attr("transform", "translate(" + ((margin.left + margin.right) / 2) + "," + 0 + ")");
+					
+	
+				lineAndDots.selectAll(".dot").data(data)
+				.enter().append("circle")
+				.attr("class", "dot")
+				.attr("r", 4)
+				.attr("cx", function(d) { return axisXLine(d.season); })
+				.attr("cy", function(d) { return axisYLine(d.comp); })
+				.on("mouseover", function(d) {
+					tooltip.transition()
+						 .duration(200)
+						 .style("opacity", 1.0);
+						 tooltip.html("Year: " + xValue(d)  + "<br/> " + "Competitiveness: " + yValue(d)   )
+						 .style("left", (d3.event.pageX + 5) + "px")
+						 .style("top", (d3.event.pageY - 28) + "px");
+				})
+				.on("mouseout", function(d) {
+					tooltip.transition()
+						 .duration(500)
+						 .style("opacity", 0);
+				});
+	
+	
+	
+	
+			});
+			
+			
+			
+	
+		function type(d) {
+		  d.titles = +d.titles;
+		  return d;
+		}
+			</script>
+
+</body>
 </html>
