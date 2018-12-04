@@ -3,7 +3,7 @@
 
 Group 3
 
-![La Liga](laliga.png)
+![Screenhot](screenshot.jpg)
 
 
 ## About

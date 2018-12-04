@@ -10,7 +10,7 @@
 	<style>
 	body {
 		background-color: ghostwhite;
-		
+
 	}
 	.page {
 		overflow: auto;
@@ -25,7 +25,7 @@
 	.main h2 {
 		font-family: 'Arimo';
 	}
-	
+
 	.left {
 		padding: 1%;
 		width: 60%;
@@ -35,7 +35,7 @@
 		width: 40%;
 	}
 	.data-circle {
-	fill: red;     
+	fill: red;
 }
 .data-line {
   fill: none;
@@ -61,10 +61,11 @@
 	.authors {
 		font-family: 'Arimo'; font-size: 14px; color: #5a6872;
 	}
+
 	.fill {
 		background-color: black;
 	}
-	p {
+	ul, li, p {
 		font-family: 'Arimo'; font-size: 16px; color: #152935; line-height: 30px;
 	}
 
@@ -84,20 +85,23 @@
 
 	.line{
 		fill: none;
-		stroke: rebeccapurple;
+		stroke: #3d70b2;
 	}
 	.dot {
     stroke: #000;
-    fill:rebeccapurple;
+    fill: #3d70b2;
     }
 
 .tooltip {
+	font-family: 'Arimo';
+	font-size: 14px;
+	padding: 1%;
   position: absolute;
   width: 200px;
-  height: 38px;
+  height: 100px;
   pointer-events: none;
   background: lightsteelblue;
-  border: 0px;		
+  border: 1px;
   border-radius: 5px;
 }
 
@@ -111,27 +115,38 @@
 <body>
 	<div class='main'>
 		<div class='main-left'>
-		<h1 class='header'>40 Years of Competitive History in the Spanish Top Flight</h1>
-		<h2 class='subheader'>Visualizing different metrics of competitiveness in Spain's first division, La Liga</h2>
+		<h1 class='header'>Competition and Finance in the Spanish Top Flight</h1>
+		<h2 class='subheader'>We follow the money to explain competition in Spain's La Liga</h2>
 		<h3 class='authors'>Peter Xenopoulos, Stefan Cherubin</h3>
 
 		<br>
 
-		<p>Spain's La Liga is one of the most popular soccer leagues in the world, hosting both perennial giants Barcelona and Real Madrid, 
-			as well as more recent contenders such as Atletico Madrid. 
-			In fact, these three teams have taken the top 3 positions since the 2012-2013 season. 
-			We have to go back to the 2003-2004 season to see a top three that didn't contain both Barcelona and Real Madrid. 
-			In fact, since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20), 
-			with either Barcelona or Madrid winning the league 66 percent of the time. In earlier years, either of those two teams would win 80 percent of the time.</p>
+		<p>Spain's La Liga is one of the most popular soccer leagues in the world, hosting both perennial giants Barcelona and Real Madrid,
+			as well as more recent contenders such as Atletico Madrid.
+			In fact, these three teams have taken the top 3 positions since the 2012-2013 season.
+			We have to go back to the 2003-2004 season to see a top three that didn't contain both Barcelona and Real Madrid.
+			In fact, since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20),
+			with either Barcelona or Madrid winning the league 75 percent of the time. Since 2003, the top 3 teams have included either Barcelona or Real Madrid</p>
 
 		</div>
-		<h2># of La Liga Titles (As of 2018)</h2>
+		<h2>Number of La Liga Titles</h2>
 		<svg id = "titles"></svg>
+		<p> We introduce a metric for competitiveness which relies on the variation in the points per match for each season. We do this for two reasons: (1) we must use per match metrics, as the number of teams in the league has varied between more recent and older seasons and (2) the more variation there is in points per match, the more we have really "good" teams and really "bad" teams. A lower competitiveness metric means that the team had more variation between teams. We see that in general, the trend has been that competitiveness has decreased for the last decade and a half. </p>
 		<div class='compBody'>
 			<h2>Competitiveness of La Liga Since 1970</h2>
 			<svg id ="comp"></svg>
-			<p>Note: Lower Competitiveness means that there were less teams who consistently dominated the league</p>
-			<p>Since 2002, the top 3 teams have included either Barcelona or Real Madrid</p>
+			<p> We also plot the occurence of financial events in La Liga, ranging from macroeconomic events to sponsorship changes. In particular, we point out
+				<ul>
+					<li><b>Bosman Ruling (1995)</b> - This EU wide ruling banned restrictions mandating a transfer fee be paid for players at the end of their contract. Essentially, players were more free to move from club to club.</li>
+					<li><b>Rise of Digital TV (1996)</b> - Before 1996, La Liga TV deals were negotiated as a league, and there was parity among teams. In 1996, digital TV took hold and clubs negotiated those contracts independently.</li>
+					<li><b>End of Initial TV Deals (2000)</b> - Typically, TV contracts last anywhere between 3 and 5 years. As the value of teams was now more easily known, La Liga TV rights started to become uneven and skewed towards Real Madrid and Barcelona.</li>
+					<li><b>Spain's Financial Crisis (2008)</b> - This is the generally accepted starting year of Spain's recession, which lasted from 2008 to 2014.</li>
+					<li><b>UEFA Financial Fair Play Rules (2011)</b> - Although agreed in principal in 2009, UEFA's financial fair play rules, which cap club financial losses, were instituted at the start of the 2011-2012 season.
+				</ul>
+			</p>
+			<h2>Competitiveness of La Liga with Events</h2>
+			<svg id ="compEvents"></svg>
+			<p>It's clear that the financial events described above correlate strongly with competitiveness in La Liga. Initially, events such as the Bosman Ruling and the growth of TV deals provided cheaper access to players and stronger sources of income. As a result, we see that competitiveness generally did increase in the late 90s and into the early 2000s. However, we see that as those contracts started to get renegotiated, and larger clubs like Real Madrid and Barcelona took home a larger share of the TV revenue, competitiveness began to fall. Spain's financial crisis, which likely intensified the debt burdens of some clubs, drastically reduced competitiveness by almost 25 percent from 2008 to 2009. Finally, financial fair play rules, which essentially prohibit a club from spending its way to the top, effectivelly froze the league's financial situation to the status quo. Since then, competitiveness has continued to go down.</p>
 		</div>
 	</div>
 	<script>
@@ -143,34 +158,34 @@
 		  };
 		var width = 750 - margin.left - margin.right;
 		var height = 400 - margin.top - margin.bottom;
-	
+
 		var svg = d3.select("#titles")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			  .append("g")
 			.attr("transform", "translate(" + margin.left + "," +  margin.top + ")")
 			.attr("align", "bottom");
-	
+
 		var x = d3.scaleLinear()
 			  .range([0, width]);
-	
+
 		var y = d3.scaleBand()
 			.range([height, 0]);
-	
+
 		var xAxis = d3.axisBottom(x)
 			//.tickValues([1, 2, 4, 18, 21]);
-	
+
 		var yAxis = d3.axisLeft(y);
-	
+
 		d3.tsv("titles.tsv", type, function(error, data) {
 		  if (error) throw error;
-	
+
 		  x.domain([0, d3.max(data, function(d) { return d.titles; })]);
-	
+
 		  y.domain(data.map(function(d) { return d.club; }))
 			.paddingInner(0.1)
 			.paddingOuter(0.5);
-	
+
 		  svg.append("g")
 			  .attr("class", "x axis")
 			  .attr("transform", "translate(0," + height + ")")
@@ -180,8 +195,8 @@
 			  .attr("transform", "translate(" + width + ",0)")
 			  .attr("y", -5)
 			  .style("text-anchor", "end")
-			  .text("Number of Titles");
-	
+			  .text("Titles");
+
 		  svg.append("g")
 			  .attr("class", "y axis")
 			  .call(yAxis).append("text")
@@ -189,8 +204,8 @@
 			  .attr("transform", "translate(" + -15 + ",0)")
 			  .attr("x", 0)
 			  .style("text-anchor", "end")
-			  .text("Club Name");
-	
+			  .text("Club");
+
 		  svg.selectAll(".bar")
 			  .data(data)
 			.enter().append("rect")
@@ -203,75 +218,70 @@
 				tooltip.transition()
 					 .duration(200)
 					 .style("opacity", 1.0);
-					 tooltip.html("Wins: " + d.titles )
+					 tooltip.html("Titles: " + d.titles + "<br />" + "Seasons: " + d.years)
 					 .style("left", (d3.event.pageX + 5) + "px")
-					 .style("top", (d3.event.pageY - 28) + "px");
+					 .style("top", (d3.event.pageY - 30) + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
 					 .duration(500)
 					 .style("opacity", 0);
 			});
-	
+
 			});
-	
+
 			var parseTime = d3.timeParse("%Y");
-			
+
 			var xValue = function(d){ return d.season; };
-			
+
 			var axisXLine = d3.scaleLinear()
 				//.domain(d3.extent(data, d => d.season))
 				.range([0,width]);
-	
+
 			var XAxis = d3.axisBottom(axisXLine).tickFormat(d3.format("d"));
-			
+
 			var yValue = function(d){return d.comp; };
-	
+
 			var axisYLine = d3.scaleLinear()
 				.range([height, 0]);
-	
+
 			var YAxis = d3.axisLeft(axisYLine);
-			
+
 			var tooltip = d3.select("body").append("div")
 			.attr("class", "tooltip")
 			.style("opacity", 0);
-	
+
 			var compBody = d3.select("#comp")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 				.html('<div style="width: 160px;"><p>Old text old text old text old text old text old text<p></div>');
-	
+
 			var valueline = d3.line()
 				.x(d => axisXLine(d.season))
 				.y(d => axisYLine(d.comp));
-	
+
 			var g = compBody.append("g");
-				
-			
-				
-				
-	
+
 			d3.tsv("competitive_measures.tsv", type, function(err, data){
 				if (err) throw err;
-	
+
 				data.forEach(function(d){
 					d.season = d.season,
-					d.comp = +d.comp,
-					d.sd_ppm = +d.sd_ppm
+					d.comp = +d.comp
 				});
-				
-	
+
+
 				//var maxComp = d3.max(data, d => d.comp);
 				axisXLine.domain(d3.extent(data, function(d) {return d.season;}));
-	
-				
+
+
 				//.domain([0,maxComp]);
 				axisYLine.domain([0, d3.max(data, function(d) {return d.comp;})]);
-				
-				
-	
+
+
+
 				compBody.append("g")
 				.attr("class", "y axis")
 				.call(YAxis)
@@ -280,8 +290,8 @@
 				.attr("transform", "translate(" + -15 + ",0)")
 				.attr("x", 0)
 				.style("text-anchor", "end")
-				.text("Competiveness");
-	
+				.text("Competitiveness");
+
 				compBody.append("g")
 				.attr("class", "x axis")
 				.attr("transform", "translate(0," + height + ")")
@@ -291,9 +301,9 @@
 				.attr("transform", "translate(" + width + ",0)")
 				.attr("y", -5)
 				.style("text-anchor", "end")
-				.text("Year");
-				
-	
+				.text("Season");
+
+
 				compBody.append("path")
 				.datum(data)
 				.attr("class", "line")
@@ -301,12 +311,12 @@
 				.attr("x", function(d) { return axisXLine(d.season); })
 				.attr("y", function(d) { return axisYLine(d.comp); });
 				//.attr("width", function(d) { return x(d.season); });
-	
+
 				var lineAndDots = g.append("g")
 				.attr("class", "line-and-dots");
 				//.attr("transform", "translate(" + ((margin.left + margin.right) / 2) + "," + 0 + ")");
-					
-	
+
+
 				lineAndDots.selectAll(".dot").data(data)
 				.enter().append("circle")
 				.attr("class", "dot")
@@ -326,15 +336,108 @@
 						 .duration(500)
 						 .style("opacity", 0);
 				});
-	
-	
-	
-	
+
 			});
-			
-			
-			
-	
+
+			var compBodyEvents = d3.select("#compEvents")
+			  .attr("width", width + margin.left + margin.right)
+			  .attr("height", height + margin.top + margin.bottom)
+			  .append("g")
+			  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+			  .html('<div style="width: 160px;"><p>Old text old text old text old text old text old text<p></div>');
+
+			var valueline = d3.line()
+			  .x(d => axisXLine(d.season))
+			  .y(d => axisYLine(d.comp));
+
+			var g = compBodyEvents.append("g");
+
+			d3.tsv("competitive_measures.tsv", type, function(err, data){
+			  if (err) throw err;
+
+			  data.forEach(function(d){
+			    d.season = d.season,
+			    d.comp = +d.comp
+			  });
+
+
+			  //var maxComp = d3.max(data, d => d.comp);
+			  axisXLine.domain(d3.extent(data, function(d) {return d.season;}));
+
+
+			  //.domain([0,maxComp]);
+			  axisYLine.domain([0, d3.max(data, function(d) {return d.comp;})]);
+
+
+
+			  compBodyEvents.append("g")
+			  .attr("class", "y axis")
+			  .call(YAxis)
+			  .append("text")
+			  .attr("class", "label")
+			  .attr("transform", "translate(" + -15 + ",0)")
+			  .attr("x", 0)
+			  .style("text-anchor", "end")
+			  .text("Competitiveness");
+
+			  compBodyEvents.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(XAxis)
+			  .append("text")
+			  .attr("class", "label")
+			  .attr("transform", "translate(" + width + ",0)")
+			  .attr("y", -5)
+			  .style("text-anchor", "end")
+			  .text("Season");
+
+			  compBodyEvents.append("path")
+			  .datum(data)
+			  .attr("class", "line")
+			  .attr("d", valueline)
+			  .attr("x", function(d) { return axisXLine(d.season); })
+			  .attr("y", function(d) { return axisYLine(d.comp); });
+			  //.attr("width", function(d) { return x(d.season); });
+
+				g.append("line")
+				.attr("x1", xScale(2000))
+				.attr("y1", 0)
+				.attr("x2", xScale(2000))
+				.attr("y2", 0.60)
+				.style("stroke-width",2)
+				.style("stroke", "red")
+				.style("fill", "none")
+
+			  var lineAndDots = g.append("g")
+			  .attr("class", "line-and-dots");
+			  //.attr("transform", "translate(" + ((margin.left + margin.right) / 2) + "," + 0 + ")");
+
+
+			  lineAndDots.selectAll(".dot").data(data)
+			  .enter().append("circle")
+			  .attr("class", "dot")
+			  .attr("r", 4)
+			  .attr("cx", function(d) { return axisXLine(d.season); })
+			  .attr("cy", function(d) { return axisYLine(d.comp); })
+			  .on("mouseover", function(d) {
+			    tooltip.transition()
+			       .duration(200)
+			       .style("opacity", 1.0);
+			       tooltip.html("Year: " + xValue(d)  + "<br/> " + "Competitiveness: " + yValue(d)   )
+			       .style("left", (d3.event.pageX + 5) + "px")
+			       .style("top", (d3.event.pageY - 28) + "px");
+			  })
+			  .on("mouseout", function(d) {
+			    tooltip.transition()
+			       .duration(500)
+			       .style("opacity", 0);
+			  });
+
+
+
+
+			});
+
 		function type(d) {
 		  d.titles = +d.titles;
 		  return d;
