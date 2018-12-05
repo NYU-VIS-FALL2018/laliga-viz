@@ -123,10 +123,9 @@
 
 		<p>Spain's La Liga is one of the most popular soccer leagues in the world, hosting both perennial giants Barcelona and Real Madrid,
 			as well as more recent contenders such as Atletico Madrid.
-			In fact, these three teams have taken the top 3 positions since the 2012-2013 season.
-			We have to go back to the 2003-2004 season to see a top three that didn't contain both Barcelona and Real Madrid.
-			In fact, since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20),
-			with either Barcelona or Madrid winning the league 75 percent of the time. Since 2003, the top 3 teams have included either Barcelona or Real Madrid</p>
+			These three teams have taken the top 3 positions since the 2012-2013 season. Additionally, at least one of Barcelona or Real Madrid has finished in the top 3 since the 1969-1970 season.
+			Since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20),
+			with either Barcelona or Madrid winning the league 75 percent during that time frame. </p>
 
 		</div>
 		<h2>Number of La Liga Titles</h2>
@@ -139,7 +138,7 @@
 				<ul>
 					<li><b>Bosman Ruling (1995)</b> - This EU wide ruling banned restrictions mandating a transfer fee be paid for players at the end of their contract. Essentially, players were more free to move from club to club.</li>
 					<li><b>Rise of Digital TV (1996)</b> - Before 1996, La Liga TV deals were negotiated as a league, and there was parity among teams. In 1996, digital TV took hold and clubs negotiated those contracts independently.</li>
-					<li><b>End of Initial TV Deals (2000)</b> - Typically, TV contracts last anywhere between 3 and 5 years. As the value of teams was now more easily known, La Liga TV rights started to become uneven and skewed towards Real Madrid and Barcelona.</li>
+					<li><b>End of Initial TV Deals (2001)</b> - Typically, TV contracts last anywhere between 3 and 5 years. As the value of teams was now more easily known, La Liga TV rights started to become uneven and skewed towards Real Madrid and Barcelona.</li>
 					<li><b>Spain's Financial Crisis (2008)</b> - This is the generally accepted starting year of Spain's recession, which lasted from 2008 to 2014.</li>
 					<li><b>UEFA Financial Fair Play Rules (2011)</b> - Although agreed in principal in 2009, UEFA's financial fair play rules, which cap club financial losses, were instituted at the start of the 2011-2012 season.
 				</ul>
@@ -400,13 +399,114 @@
 			  //.attr("width", function(d) { return x(d.season); });
 
 				g.append("line")
-				.attr("x1", xScale(2000))
-				.attr("y1", 0)
-				.attr("x2", xScale(2000))
-				.attr("y2", 0.60)
+				.attr("x1", axisXLine(1995))
+				.attr("y1", 0.00)
+				.attr("x2", axisXLine(1995))
+				.attr("y2", 340)
 				.style("stroke-width",2)
-				.style("stroke", "red")
+				.style("stroke", "#5596e6")
 				.style("fill", "none")
+				.on("mouseover", function(d) {
+					tooltip.transition()
+						 .duration(200)
+						 .style("opacity", 1.0);
+						 tooltip.html("<b>Bosman Ruling (1995)</b>" + "<br /> <br />" + "<i>Players are more free to change clubs without transfer fees. Competition <b>neutral</b>.</i>")
+						 .style("left", (d3.event.pageX + 5) + "px")
+						 .style("top", (d3.event.pageY - 28) + "px");
+				})
+				.on("mouseout", function(d) {
+					tooltip.transition()
+						 .duration(500)
+						 .style("opacity", 0);
+				});
+
+				g.append("line")
+				.attr("x1", axisXLine(1996))
+				.attr("y1", 0.00)
+				.attr("x2", axisXLine(1996))
+				.attr("y2", 340)
+				.style("stroke-width",2)
+				.style("stroke", "#5596e6")
+				.style("fill", "none")
+				.on("mouseover", function(d) {
+					tooltip.transition()
+						 .duration(200)
+						 .style("opacity", 1.0);
+						 tooltip.html("<b>First Major TV Deals (1996)</b>" + "<br /> <br />" + "<i>There is a major increase to revenues for all La Liga clubs. Competition <b>increases</b>.</i>")
+						 .style("left", (d3.event.pageX + 5) + "px")
+						 .style("top", (d3.event.pageY - 28) + "px");
+				})
+				.on("mouseout", function(d) {
+					tooltip.transition()
+						 .duration(500)
+						 .style("opacity", 0);
+				});
+
+				g.append("line")
+				.attr("x1", axisXLine(2001))
+				.attr("y1", 0.00)
+				.attr("x2", axisXLine(2001))
+				.attr("y2", 340)
+				.style("stroke-width",2)
+				.style("stroke", "#5596e6")
+				.style("fill", "none")
+				.on("mouseover", function(d) {
+			    tooltip.transition()
+			       .duration(200)
+			       .style("opacity", 1.0);
+			       tooltip.html("<b>End of First Major TV Deals (2001)</b>" + "<br /> <br />" + "<i>Real Madrid and Barcelona swoop in to control the vast majority of TV revenue. Competition <b>decreases</b>.</i>")
+			       .style("left", (d3.event.pageX + 5) + "px")
+			       .style("top", (d3.event.pageY - 28) + "px");
+			  })
+				.on("mouseout", function(d) {
+			    tooltip.transition()
+			       .duration(500)
+			       .style("opacity", 0);
+			  });
+
+				g.append("line")
+				.attr("x1", axisXLine(2008))
+				.attr("y1", 0.00)
+				.attr("x2", axisXLine(2008))
+				.attr("y2", 340)
+				.style("stroke-width",2)
+				.style("stroke", "#5596e6")
+				.style("fill", "none")
+				.on("mouseover", function(d) {
+			    tooltip.transition()
+			       .duration(200)
+			       .style("opacity", 1.0);
+			       tooltip.html("<b>Spain's Financial Crisis (2008)</b>" + "<br /> <br />" + "<i>Spain enters recession and some clubs fail to meet debt obligations. Competition <b>decreases</b>.</i>")
+			       .style("left", (d3.event.pageX + 5) + "px")
+			       .style("top", (d3.event.pageY - 28) + "px");
+			  })
+				.on("mouseout", function(d) {
+			    tooltip.transition()
+			       .duration(500)
+			       .style("opacity", 0);
+			  });
+
+				g.append("line")
+				.attr("x1", axisXLine(2011))
+				.attr("y1", 0.00)
+				.attr("x2", axisXLine(2011))
+				.attr("y2", 340)
+				.style("stroke-width",2)
+				.style("stroke", "#5596e6")
+				.style("fill", "none")
+				.on("mouseover", function(d) {
+			    tooltip.transition()
+			       .duration(200)
+			       .style("opacity", 1.0);
+			       tooltip.html("<b>UEFA Financial Fair Play (2011)</b>" + "<br /> <br />" + "<i>UEFA enacts financial fair play rules, essentially maintaining the status quo of the league. Competition <b>decreases</b>.</i>")
+			       .style("left", (d3.event.pageX + 5) + "px")
+			       .style("top", (d3.event.pageY - 28) + "px");
+			  })
+				.on("mouseout", function(d) {
+			    tooltip.transition()
+			       .duration(500)
+			       .style("opacity", 0);
+			  });
 
 			  var lineAndDots = g.append("g")
 			  .attr("class", "line-and-dots");
@@ -432,9 +532,6 @@
 			       .duration(500)
 			       .style("opacity", 0);
 			  });
-
-
-
 
 			});
 
