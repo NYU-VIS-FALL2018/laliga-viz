@@ -11,6 +11,6 @@ In this project we will investigate how competitiveness in Spain’s top soccer 
 
 
 ## More
-[DEMO](https://nyu-vis-fall2018.github.io/storytelling-group-3/.)
+[DEMO](https://nyu-vis-fall2018.github.io/laliga-viz/.)
 
 [Project Description](project.pdf)
