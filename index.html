@@ -32,16 +32,6 @@
 		background-size: cover;
 		background-attachment: fixed;
 	}
-	.banner_lower {
-		width: 100%;
-		height: 25%;
-		background-image: url("bg3.png");
-		background-color: #5596e6;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-attachment: fixed;
-	}
 	.page {
 		overflow: auto;
 		display: flex;
@@ -121,6 +111,9 @@
     stroke: #000;
     fill: #3d70b2;
     }
+    .mainView {
+    	display: flex;
+    }
 
 .tooltip {
 	font-family: 'Arimo';
@@ -146,35 +139,33 @@
 	<div class='banner'></div>
 	<div class='main'>
 		<div class='main-left'>
-		<h1 class='header'>Competition and Finance in the Spanish Top Flight</h1>
+		<h1 class='header'>Competition in the Spain's La Liga</h1>
 		<h2 class='subheader'>We follow the money to explain competitiveness in Spain's La Liga</h2>
 		<h3 class='authors'>Peter Xenopoulos, Stefan Cherubin</h3>
 
 		<br>
 
-		<p>Spain's La Liga is one of the most popular soccer leagues in the world, hosting both perennial giants Barcelona and Real Madrid,
-			as well as more recent contenders such as Atletico Madrid.
-			These three teams have taken the top 3 positions since the 2012-2013 season. Additionally, at least one of Barcelona or Real Madrid has finished in the top 3 since the 1969-1970 season.
-			Since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20),
-			with either Barcelona or Real Madrid winning the league 75 percent during that time frame. </p>
+		<p>Spain's La Liga is one of the most popular soccer leagues in the world, hosting both perennial giants Barcelona and Real Madrid, as well as more recent contenders such as Atletico Madrid. These three teams have occupied the top 3 positions since the 2012-2013 season. Additionally, at least one of Barcelona or Real Madrid has finished in the top 3 since the 1969-1970 season. Since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20), with either Barcelona or Real Madrid winning the league 75 percent during that time frame. </p>
+		
+		<p>We define competition in a given season as a function of the variation in the points scored by each team. If you hover over one of the seasons, you can see a bar chart illustrating the difference in average points per match. In season where competition is lower, we see big differences between the top and the bottom of the league. In seasons with lots of competition, the difference shrinks.</p>
 
 		</div>
-		<h2>Who wins La Liga?</h2>
-		<svg id = "titles"></svg>
-		<p>No surprise here. With Barcelona and Real Madrid winning so much, it's no wonder they have more than 50 titles between the two of them. The question then becomes: <i>has the league always been so imbalanced?</i></p>
+		<h2>Competition in La Liga since 1970</h2>
+					<div class = "mainView">
+				<div>
+					<svg id ="compEvents"></svg>
+				</div>
+				<div class ='ppm'>
+					<svg id ="ppmchart"></svg>
+				</div>
+			</div>
+		<p>It's clear that the league is becoming drastically less competitive, especially in the last decade, however the general trend seems to have started in the early 2000s, when TV contracts were renegotiated. Recent regulations and financial crisis seemed to have maintained the inequality status quo.</p>
 		<br />
 		<br />
 		<div class = "banner_mid"></div>
-		<h2>Defining and Visualizing Competitiveness</h2>
-		<p> We introduce a metric for competitiveness which relies on the variation in the points per match for each season. We do this for two reasons: (1) we must use per match metrics, as the number of teams in the league has varied between more recent and older seasons and (2) the more variation there is in points per match, the more we have really "good" teams and really "bad" teams. A lower competitiveness metric means that the team had more variation between teams. We see that in general, the trend has been that competitiveness has decreased for the last decade and a half. </p>
-		<div class='compBody'>
-			<svg id ="comp"></svg>
-			<p>This trend downwards is interesting, as it appears that prior to the current downward trend, the league was actually becoming <i>more</i> competitive.</p>
-			<br />
-			<br />
-			<div class = "banner_lower"></div>
-			<h2>Major Financial Events and Competitiveness</h2>
-			<p> We also investigate financial events in La Liga, ranging from macroeconomic events to sponsorship changes. In particular, we point out
+		<h2>Event Descriptions</h2>
+		<p>
+			Here are deeper descriptions of the five events we cover in our visualization. 
 				<ul>
 					<li><b>Bosman Ruling (1995)</b> - This EU wide ruling banned restrictions mandating a transfer fee be paid for players at the end of their contract. Essentially, players were more free to move from club to club.</li>
 					<li><b>Rise of Digital TV (1996)</b> - Before 1996, La Liga TV deals were negotiated as a league, and there was parity among teams. In 1996, digital TV took hold and clubs negotiated those contracts independently.</li>
@@ -182,10 +173,14 @@
 					<li><b>Spain's Financial Crisis (2008)</b> - This is the generally accepted starting year of Spain's recession, which lasted from 2008 to 2014.</li>
 					<li><b>UEFA Financial Fair Play Rules (2011)</b> - Although agreed in principal in 2009, UEFA's financial fair play rules, which cap club financial losses, were instituted at the start of the 2011-2012 season.
 				</ul>
-			</p>
-			<svg id ="compEvents"></svg>
-			<p>It's clear that the financial events described above correlate strongly with competitiveness in La Liga. Initially, events such as the Bosman Ruling and the growth of TV deals provided cheaper access to players and stronger sources of income. As a result, we see that competitiveness generally did increase in the late 90s and into the early 2000s. However, we see that as those contracts started to get renegotiated, and larger clubs like Real Madrid and Barcelona took home a larger share of the TV revenue, competitiveness began to fall. Spain's financial crisis, which likely intensified the debt burdens of some clubs, drastically reduced competitiveness by almost 25 percent from 2008 to 2009. Finally, financial fair play rules, which essentially prohibit a club from spending its way to the top, effectivelly froze the league's financial situation to the status quo. Since then, competitiveness has continued to go down.</p>
-		</div>
+		</p>
+		<h2>Competition Metric</h2>
+		<p> We introduce a metric for competitiveness which relies on the variation in the points per match for each season. We do this for two reasons: (1) we must use per match metrics, as the number of teams in the league has varied between more recent and older seasons and (2) the more variation there is in points per match, the more we have really "good" teams and really "bad" teams. A lower competitiveness metric means that the team had more variation between teams. We see that in general, the trend has been that competitiveness has decreased for the last decade and a half. Specifically, our competition metric for a given season is defined as
+		<br />
+		<br />
+		<img src='competitiveness_calc.gif' alt='calculating competitiveness'/>
+		<br />
+		<br /> </p>
 	</div>
 	<script>
 			var margin = {
@@ -258,7 +253,9 @@
 					 .style("opacity", 1.0);
 					 tooltip.html("Titles: " + d.titles + "<br />" + "Seasons: " + d.years)
 					 .style("left", (d3.event.pageX + 5) + "px")
-					 .style("top", (d3.event.pageY - 30) + "px");
+					 .style("top", (d3.event.pageY - 30) + "px")
+
+					 //d3.tsv("ppm.tsv")
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -302,13 +299,85 @@
 
 			var g = compBody.append("g");
 
+			function compSecondary(data, year){
+				d3.tsv("results.tsv", type, function(err, data){
+					if (err) throw err;
+
+				data.forEach(function(d){
+					d.season = d.season,
+					d.club = d.club,
+					d.ppm = +d.ppm
+				});
+
+				data = data.filter(function(d){
+					return d.season == year
+				})
+
+				var resultsX = x.domain([0,3.0]);
+
+				var resultsY = y.domain(data.map(function(d) { return d.club; }))//.domain([0, d3.max(data, function(d) {return d.club;})]);
+				//.domain(data.map(function(d) { return d.ppm; }))
+				
+
+				var ppmsvg = d3.select("#ppmchart")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+				
+				ppmsvg.append("g")
+				.attr("class", "y axis")
+				.call(yAxis)
+				.append("text")
+				.attr("class", "label")
+				.attr("transform", "translate(" + 0 + ",0)")
+				.attr("x", 0)
+				.style("text-anchor", "end")
+				.text("Club");
+
+				ppmsvg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(d3.axisBottom(resultsX))
+				.append("text")
+				.attr("class", "label")
+				.attr("transform", "translate(" + width + ",0)")
+				.attr("y", -5)
+				.style("text-anchor", "end")
+				.text("Points Per Match");
+
+		
+			  ppmsvg.selectAll(".bar")
+			  .data(data)
+			  .enter().append("rect")
+			  .attr("class", "bar")
+			  .attr("x", 0)
+			  .attr("height", resultsY.bandwidth())
+			  .attr("y", function(d) { return y(d.club); })
+			  .attr("width", function(d) { return resultsX(d.ppm); })
+
+
+
+
+
+
+				})
+			}
+
+		
+
 			d3.tsv("competitive_measures.tsv", type, function(err, data){
 				if (err) throw err;
+
+				//compSecondary(data, 2005)
 
 				data.forEach(function(d){
 					d.season = d.season,
 					d.comp = +d.comp
 				});
+				
+
+				
 
 
 				//var maxComp = d3.max(data, d => d.comp);
@@ -362,18 +431,21 @@
 				.attr("cx", function(d) { return axisXLine(d.season); })
 				.attr("cy", function(d) { return axisYLine(d.comp); })
 				.on("mouseover", function(d) {
+					//compSecondary(data, xValue(d))
 					tooltip.transition()
 						 .duration(200)
 						 .style("opacity", 1.0);
 						 tooltip.html("Year: " + xValue(d)  + "<br/> " + "Competitiveness: " + yValue(d)   )
 						 .style("left", (d3.event.pageX + 5) + "px")
 						 .style("top", (d3.event.pageY - 28) + "px");
+						 
 				})
 				.on("mouseout", function(d) {
 					tooltip.transition()
 						 .duration(500)
 						 .style("opacity", 0);
-				});
+				})
+				
 
 			});
 
@@ -559,18 +631,25 @@
 			  .attr("cx", function(d) { return axisXLine(d.season); })
 			  .attr("cy", function(d) { return axisYLine(d.comp); })
 			  .on("mouseover", function(d) {
+				  
 			    tooltip.transition()
 			       .duration(200)
 			       .style("opacity", 1.0);
 			       tooltip.html("Year: " + xValue(d)  + "<br/> " + "Competitiveness: " + yValue(d)   )
 			       .style("left", (d3.event.pageX + 5) + "px")
 			       .style("top", (d3.event.pageY - 28) + "px");
+
+			    if (!d3.select("#ppmchart").empty()){
+					d3.select("#ppmchart").selectAll("g > *").remove()
+				}
+				
+				compSecondary(data, xValue(d));
 			  })
 			  .on("mouseout", function(d) {
 			    tooltip.transition()
 			       .duration(500)
 			       .style("opacity", 0);
-			  });
+			  })
 
 			});
 
