@@ -318,8 +318,7 @@
 				var resultsX = x.domain([0,3.0]);
 
 				var resultsY = y.domain(data.map(function(d) { return d.club; }))
-				.paddingInner(0.1)
-			    .paddingOuter(0.5)
+				.padding(0.2)
 				
 
 				var ppmsvg = d3.select("#ppmchart")
