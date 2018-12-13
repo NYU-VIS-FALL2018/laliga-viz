@@ -346,8 +346,11 @@
 							if (d.club === "Real Madrid"){
 								return "ghostwhite"
 							}
-							if ( (d.club != "Barcelona" || d.club != "Real Madrid") && d.ppm >= stddev + averageppm){
+							if (d.ppm >= 0.5 * stddev + averageppm){
 								return "#ADEC43"
+							}
+							if ( d.ppm < averageppm -  0.5 * stddev){
+								return "crimson"
 							}
 							
 							//return "#5596e6"
@@ -394,10 +397,10 @@
                 .style("fill","#333333")
                 .style("font-size","15px").text(yLabel);
 
-				let colorList = ["Barcelona", "Real Madrid", "Any Team with ppm >= stddev + average"]
+				let colorList = ["Barcelona", "Real Madrid", "Within Average PPM", "Significantly Above Average PPM", "Significantly Below Average PPM"]
 				var color = d3.scaleOrdinal()
 				.domain(colorList)
-				.range(["blue", "ghostwhite", "#ADEC43"]) 	
+				.range(["blue", "ghostwhite", "#068f91", "#ADEC43", "crimson"]) 	
 
 				 var legend = scattersvg.selectAll(".legend")
 				.data(color.domain())
