@@ -264,6 +264,8 @@
 
             
 
+				
+
 				data.forEach(function(d){
 					d.season = d.season,
 					d.club = d.club,
@@ -272,10 +274,11 @@
                     if (columns.indexOf(d.club) < 0 ){
                         columns.push(d.club)
                     }
+					
 
                 });
 
-                console.log(columns)
+			
                 
                 var season = "season"
                 var ppm = ""
@@ -307,6 +310,7 @@
                 .range([height * 2, 0])
                 .domain([0,3.0])
 
+
                 for(var i=0;i<columns.length;i++) {
                     var y=columns[i];
                     var yValue = function(d) { return d.ppm;}
@@ -318,6 +322,9 @@
                         d[x] = d.season;
                         d[y] = +d.ppm;
                     });
+
+					let averageppm = d3.mean(data, (d) => d.ppm)
+					let stddev = 0.923684;
                    // yScale.domain([d3.min(data, yValue)-0.2, d3.max(data, yValue)+0.2]);
                     scattersvg.selectAll(".dot"+i)
                         .data(data)
@@ -325,11 +332,51 @@
                         .append("circle")
                         .attr("class", "dot"+i)
                         .attr("data-legend",function() { return y}) //optional legend
-                        .style("fill","#5596e6")
-                        .style("stroke", "#5596e6")
-                        .attr("r", 3)
+                        .style("fill", function(d){
+
+							if (d.club === "Barcelona"){
+								return "#ADEC43"
+							}
+							if (d.club === "Real Madrid"){
+								return "black"
+							}
+							if ( (d.club != "Barcelona" || d.club != "Real Madrid") && d.ppm >= 0.5 * stddev + averageppm){
+								return "red"
+							}
+							
+							return "#5596e6"
+						})
+                        .style("stroke", function(d){
+								if (d.club === "Barcelona"){
+									return "#ADEC43"
+								}
+								if (d.club === "Real Madrid"){
+									return "black"
+								}
+								if ( (d.club != "Barcelona" || d.club != "Real Madrid") && d.ppm >= 0.5 * stddev + averageppm){
+									return "red"
+								}
+
+								return "#5596e6"
+								})
+                        .attr("r", 3.75)
                         .attr("cx", xMap)
-                        .attr("cy", yMap);
+                        .attr("cy", yMap)
+						.on("mouseover", function(d) {
+					//compSecondary(data, xValue(d))
+					tooltip.transition()
+						 .duration(200)
+						 .style("opacity", 1.0);
+						 tooltip.html("Club: " + d.club  + "<br/> " + "Competitiveness: " + yValue(d)   )
+						 .style("left", (d3.event.pageX + 5) + "px")
+						 .style("top", (d3.event.pageY - 28) + "px");
+						 
+				})
+				.on("mouseout", function(d) {
+					tooltip.transition()
+						 .duration(500)
+						 .style("opacity", 0);
+				})
                 }
 
                 scattersvg.append("g")
