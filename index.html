@@ -130,6 +130,9 @@
   border: 1px;
   border-radius: 5px;
 }
+.scatterplot{
+	
+}
 
 
 
@@ -155,12 +158,20 @@
 		</div>
 		<h2>Competition in La Liga since 1970</h2>
 					<div class = "mainView">
-				<div>
+				<div class="competitive">
 					<svg id ="compEvents"></svg>
-				</div>
-				<div class ='ppm'>
-					<svg id ="ppmchart"></svg>
-				</div>
+				 </div>
+					<div class ='compline'>
+							<div class ='ppm'>
+									<svg id ="ppmchart"></svg>
+							</div>
+							<div id = "scatter">
+									<svg id ="scatterplot"></svg>
+			
+							</div>
+					</div>
+				
+				
 			</div>
 		<p>It's clear that the league is becoming drastically less competitive, especially in the last decade, however the general trend seems to have started in the early 2000s, when TV contracts were renegotiated. Recent regulations and financial crisis seemed to have maintained the inequality status quo.</p>
 		<br />
@@ -213,61 +224,6 @@
 
 		var yAxis = d3.axisLeft(y);
 
-		d3.tsv("titles.tsv", type, function(error, data) {
-		  if (error) throw error;
-
-		  x.domain([0, d3.max(data, function(d) { return d.titles; })]);
-
-		  y.domain(data.map(function(d) { return d.club; }))
-			.paddingInner(0.1)
-			.paddingOuter(0.5);
-
-		  svg.append("g")
-			  .attr("class", "x axis")
-			  .attr("transform", "translate(0," + height + ")")
-			  .call(xAxis)
-			.append("text")
-			  .attr("class", "label")
-			  .attr("transform", "translate(" + width + ",0)")
-			  .attr("y", -5)
-			  .style("text-anchor", "end")
-			  .text("Titles");
-
-		  svg.append("g")
-			  .attr("class", "y axis")
-			  .call(yAxis).append("text")
-			  .attr("class", "label")
-			  .attr("transform", "translate(" + -15 + ",0)")
-			  .attr("x", 0)
-			  .style("text-anchor", "end")
-			  .text("Club");
-
-		  svg.selectAll(".bar")
-			  .data(data)
-			.enter().append("rect")
-			  .attr("class", "bar")
-			  .attr("x", 0)
-			  .attr("height", y.bandwidth())
-			  .attr("y", function(d) { return y(d.club); })
-			  .attr("width", function(d) { return x(d.titles); })
-			  .on("mouseover", function(d) {
-				tooltip.transition()
-					 .duration(200)
-					 .style("opacity", 1.0);
-					 tooltip.html("Titles: " + d.titles + "<br />" + "Seasons: " + d.years)
-					 .style("left", (d3.event.pageX + 5) + "px")
-					 .style("top", (d3.event.pageY - 30) + "px")
-
-					 //d3.tsv("ppm.tsv")
-			})
-			.on("mouseout", function(d) {
-				tooltip.transition()
-					 .duration(500)
-					 .style("opacity", 0);
-			});
-
-			});
-
 			var parseTime = d3.timeParse("%Y");
 
 			var xValue = function(d){ return d.season; };
@@ -301,6 +257,112 @@
 
 			var g = compBody.append("g");
 
+			d3.tsv("results.tsv", type, function(err, data){
+                    if (err) throw err;
+                    
+                columns = []
+
+            
+
+				data.forEach(function(d){
+					d.season = d.season,
+					d.club = d.club,
+                    d.ppm = +d.ppm
+
+                    if (columns.indexOf(d.club) < 0 ){
+                        columns.push(d.club)
+                    }
+
+                });
+
+                console.log(columns)
+                
+                var season = "season"
+                var ppm = ""
+                var xLabel = "Year"
+                var yLabel = "Points Per Match"
+
+
+                var scattersvg = d3.select("#scatterplot")
+                .attr("width",  1000 + width + margin.left + margin.right)
+                .attr("height", 1000 + height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                var xValue = (d) => {
+                    return d.season
+                }
+
+                var xScale = d3.scaleLinear()
+                .range([0, width * 2.5])
+                .domain([1969,2018])
+
+                var xMap = (d) => {
+                    return xScale(xValue(d))
+                }
+
+                var axisX = d3.axisBottom(xScale).ticks(40)
+
+                var yScale = d3.scaleLinear()
+                .range([height * 2, 0])
+                .domain([0,3.0])
+
+                for(var i=0;i<columns.length;i++) {
+                    var y=columns[i];
+                    var yValue = function(d) { return d.ppm;}
+                    //yScale = d3.scalelinear().range([height, 0]),
+                    var yMap = function(d) { return yScale(yValue(d));}
+                    var axisY = d3.axisLeft(yScale).ticks(20)
+                   // var yAxis = d3.svg.axis().scale(yScale).orient("left")
+                    data.forEach(function(d) {
+                        d[x] = d.season;
+                        d[y] = +d.ppm;
+                    });
+                   // yScale.domain([d3.min(data, yValue)-0.2, d3.max(data, yValue)+0.2]);
+                    scattersvg.selectAll(".dot"+i)
+                        .data(data)
+                        .enter()
+                        .append("circle")
+                        .attr("class", "dot"+i)
+                        .attr("data-legend",function() { return y}) //optional legend
+                        .style("fill","#5596e6")
+                        .style("stroke", "#5596e6")
+                        .attr("r", 3)
+                        .attr("cx", xMap)
+                        .attr("cy", yMap);
+                }
+
+                scattersvg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height * 2 + ")")
+                .call(axisX.tickFormat(d3.format("d")))
+                .append("text")
+                .attr("y", -5)
+                .attr("x", width)
+                .style("text-anchor", "end")
+                .style("fill","#333333")
+                .style("font-size","15px").text(xLabel);
+
+                scattersvg.append("g")
+                .attr("class", "y axis")
+                .call(axisY)
+                .append("text")
+                .attr("transform", "translate(" + -25 + ",0)")
+                .attr("y", 6)
+                .style("text-anchor", "end")
+                .style("fill","#333333")
+                .style("font-size","15px").text(yLabel);
+
+
+        
+
+
+                })
+
+
+//			
+
+///----------------------------------
 			function compSecondary(data, year){
 				d3.tsv("results.tsv", type, function(err, data){
 					if (err) throw err;
@@ -660,6 +722,7 @@
 		  return d;
 		}
 			</script>
+			
 
 </body>
 </html>
