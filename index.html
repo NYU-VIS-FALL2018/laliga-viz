@@ -111,6 +111,11 @@
     stroke: #000;
     fill: #3d70b2;
     }
+	.ndot51 {
+    stroke: #000;
+    fill: #068f91;
+    }
+	
     .dot:hover {
     	fill: #3d70b2;
     }
@@ -330,35 +335,24 @@
                         .data(data)
                         .enter()
                         .append("circle")
-                        .attr("class", "dot"+i)
-                        .attr("data-legend",function() { return y}) //optional legend
+                        .attr("class", "ndot"+i)
+                        .attr("data-legend",function(d) { return d.club}) //optional legend
                         .style("fill", function(d){
 
 							if (d.club === "Barcelona"){
-								return "#ADEC43"
+								//return "#ADEC43"
+								return "blue"
 							}
 							if (d.club === "Real Madrid"){
-								return "black"
+								return "ghostwhite"
 							}
-							if ( (d.club != "Barcelona" || d.club != "Real Madrid") && d.ppm >= 0.5 * stddev + averageppm){
-								return "red"
+							if ( (d.club != "Barcelona" || d.club != "Real Madrid") && d.ppm >= stddev + averageppm){
+								return "#ADEC43"
 							}
 							
-							return "#5596e6"
+							//return "#5596e6"
 						})
-                        .style("stroke", function(d){
-								if (d.club === "Barcelona"){
-									return "#ADEC43"
-								}
-								if (d.club === "Real Madrid"){
-									return "black"
-								}
-								if ( (d.club != "Barcelona" || d.club != "Real Madrid") && d.ppm >= 0.5 * stddev + averageppm){
-									return "red"
-								}
-
-								return "#5596e6"
-								})
+                        //.style("stroke", "black")
                         .attr("r", 3.75)
                         .attr("cx", xMap)
                         .attr("cy", yMap)
@@ -400,6 +394,39 @@
                 .style("fill","#333333")
                 .style("font-size","15px").text(yLabel);
 
+				let colorList = ["Barcelona", "Real Madrid", "Any Team with ppm >= stddev + average"]
+				var color = d3.scaleOrdinal()
+				.domain(colorList)
+				.range(["blue", "ghostwhite", "#ADEC43"]) 	
+
+				 var legend = scattersvg.selectAll(".legend")
+				.data(color.domain())
+				.enter().append("g")
+				.attr("class", "legend")
+				.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+			// draw legend colored rectangles
+			legend.append("rect")
+				.attr("x", width - 18)
+				//.attr("class", "ndot51")
+				.attr("width", 18)
+				.attr("height", 18)
+				//.attr("r", 3.5)
+				.style("stroke", "black")
+				.style("fill", color);
+
+			// draw legend text
+			legend.append("text")
+				.attr("x", width - 24)
+				.attr("y", 9)
+				.attr("dy", ".35em")
+				.style("text-anchor", "end")
+				.text(function(d) { return d;})
+
+
+				
+			
+				
 
         
 
