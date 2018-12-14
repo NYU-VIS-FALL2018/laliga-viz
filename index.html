@@ -158,13 +158,15 @@
 
 		<p>Spain's La Liga is one of the most popular soccer leagues in the world, hosting both perennial giants Barcelona and Real Madrid, as well as more recent contenders such as Atletico Madrid. These three teams have occupied the top 3 positions since the 2012-2013 season. Additionally, at least one of Barcelona or Real Madrid has finished in the top 3 since the 1969-1970 season. Since the 1970-1971 season, just 9 clubs have won the league, which is less than half of all the clubs currently in the league (20), with either Barcelona or Real Madrid winning the league 75 percent during that time frame. </p>
 		
-		<p>We define competition in a given season as a function of the variation in the points scored by each team. If you hover over one of the seasons, you can see a bar chart illustrating the difference in average points per match. In season where competition is lower, we see big differences between the top and the bottom of the league. A low competition season will have the league leaders and worst teams incredibly far apart. In seasons with lots of competition, the difference shrinks, and the distribution will look more uniform.</p>
+		<p>We define competition in a given season as a function of the variation in the points scored by each team. Below, you see each team's points per match for each season. We can see that in recent years, a well defined cluster containing Barcelona (gold) and Real Madrid (blue) has emerged. As we see, there is more variation in recent years, meaning we have really <i>good</i> teams and really <i>bad</i> teams.
+		</p>
 
 		</div>
-						<div id = "scatter">
-					<svg id ="scatterplot"></svg>
-				</div>
-				
+		<div id = "scatter">
+			<svg id ="scatterplot"></svg>
+		</div>
+
+		<p> We then aggregate by taking the reciprocal of the standard deviation of the points per match in each season. If you hover over one of the seasons, you can see a bar chart illustrating the difference in average points per match. In season where competition is lower, we see big differences between the top and the bottom of the league. A low competition season will have the league leaders and worst teams incredibly far apart. In seasons with lots of competition, the difference shrinks, and the distribution will look more uniform. On our first plot, this means that the points will be more spread out in times of weak competition, and more bunched in times of competition.</p>
 		<h2>Competition in La Liga since 1970</h2>
 			<div class = "mainView">
 						
@@ -342,7 +344,7 @@
 
 							if (d.club === "Barcelona"){
 								//return "#ADEC43"
-								return "#EDBB00"
+								return "#A50044"
 							}
 							if (d.club === "Real Madrid"){
 								return "#00529F"
@@ -402,7 +404,7 @@
 				let colorList = ["Barcelona", "Real Madrid",  "Other Teams"]
 				var color = d3.scaleOrdinal()
 				.domain(colorList)
-				.range(["#EDBB00", "#00529F",  "#ffffe0"]) 	
+				.range(["#A50044", "#00529F",  "#ffffe0"]) 	
 
 				 var legend = scattersvg.selectAll(".legend")
 				.data(color.domain())
