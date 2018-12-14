@@ -113,7 +113,7 @@
     }
 	.ndot51 {
     stroke: #000;
-    fill: #068f91;
+    fill: #81822F;
     }
 	
     .dot:hover {
@@ -341,16 +341,16 @@
 
 							if (d.club === "Barcelona"){
 								//return "#ADEC43"
-								return "blue"
+								return "#2E1A28"
 							}
 							if (d.club === "Real Madrid"){
 								return "ghostwhite"
 							}
 							if (d.ppm >= 0.5 * stddev + averageppm){
-								return "#ADEC43"
+								return "#1E694D"
 							}
 							if ( d.ppm < averageppm -  0.5 * stddev){
-								return "crimson"
+								return "#EE855C"
 							}
 							
 							//return "#5596e6"
@@ -397,10 +397,10 @@
                 .style("fill","#333333")
                 .style("font-size","15px").text(yLabel);
 
-				let colorList = ["Barcelona", "Real Madrid", "Within Average PPM", "Significantly Above Average PPM", "Significantly Below Average PPM"]
+				let colorList = ["Barcelona", "Real Madrid",  "Significantly Above Average PPM","Within Average PPM", "Significantly Below Average PPM"]
 				var color = d3.scaleOrdinal()
 				.domain(colorList)
-				.range(["blue", "ghostwhite", "#068f91", "#ADEC43", "crimson"]) 	
+				.range(["#2E1A28", "ghostwhite",  "#1E694D","#81822F", "#EE855C"]) 	
 
 				 var legend = scattersvg.selectAll(".legend")
 				.data(color.domain())
