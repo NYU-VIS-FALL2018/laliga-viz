@@ -161,23 +161,24 @@
 		<p>We define competition in a given season as a function of the variation in the points scored by each team. If you hover over one of the seasons, you can see a bar chart illustrating the difference in average points per match. In season where competition is lower, we see big differences between the top and the bottom of the league. A low competition season will have the league leaders and worst teams incredibly far apart. In seasons with lots of competition, the difference shrinks, and the distribution will look more uniform.</p>
 
 		</div>
+						<div id = "scatter">
+					<svg id ="scatterplot"></svg>
+				</div>
+				
 		<h2>Competition in La Liga since 1970</h2>
-					<div class = "mainView">
+			<div class = "mainView">
+						
 				<div class="competitive">
 					<svg id ="compEvents"></svg>
-				 </div>
-					<div class ='compline'>
-							<div class ='ppm'>
-									<svg id ="ppmchart"></svg>
-							</div>
-							<div id = "scatter">
-									<svg id ="scatterplot"></svg>
+				</div>
 			
-							</div>
-					</div>
-				
-				
+				<div class ='compline'>
+					<div class ='ppm'>
+						<svg id ="ppmchart"></svg>
+					</div>	
+				</div>
 			</div>
+
 		<p>It's clear that the league is becoming drastically less competitive, especially in the last decade, however the general trend seems to have started in the early 2000s, when TV contracts were renegotiated. Recent regulations and financial crisis seemed to have maintained the inequality status quo.</p>
 		<br />
 		<br />
@@ -292,8 +293,8 @@
 
 
                 var scattersvg = d3.select("#scatterplot")
-                .attr("width",  1000 + width + margin.left + margin.right)
-                .attr("height", 1000 + height + margin.top + margin.bottom)
+                .attr("width",  950 + width + margin.left + margin.right)
+                .attr("height", 400 + height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -303,7 +304,7 @@
 
                 var xScale = d3.scaleLinear()
                 .range([0, width * 2.5])
-                .domain([1969,2018])
+                .domain([1970,2016])
 
                 var xMap = (d) => {
                     return xScale(xValue(d))
@@ -341,18 +342,19 @@
 
 							if (d.club === "Barcelona"){
 								//return "#ADEC43"
-								return "#2E1A28"
+								return "#EDBB00"
 							}
 							if (d.club === "Real Madrid"){
-								return "ghostwhite"
+								return "#00529F"
 							}
 							if (d.ppm >= 0.5 * stddev + averageppm){
-								return "#1E694D"
+								return "#ffffe0"
 							}
 							if ( d.ppm < averageppm -  0.5 * stddev){
-								return "#EE855C"
+								return "#ffffe0"
 							}
 							
+							return "#ffffe0"
 							//return "#5596e6"
 						})
                         //.style("stroke", "black")
@@ -364,7 +366,7 @@
 					tooltip.transition()
 						 .duration(200)
 						 .style("opacity", 1.0);
-						 tooltip.html("Club: " + d.club  + "<br/> " + "Competitiveness: " + yValue(d)   )
+						 tooltip.html("Club: " + d.club  + "<br/> " + "PPM: " + yValue(d)   )
 						 .style("left", (d3.event.pageX + 5) + "px")
 						 .style("top", (d3.event.pageY - 28) + "px");
 						 
@@ -397,10 +399,10 @@
                 .style("fill","#333333")
                 .style("font-size","15px").text(yLabel);
 
-				let colorList = ["Barcelona", "Real Madrid",  "Significantly Above Average PPM","Within Average PPM", "Significantly Below Average PPM"]
+				let colorList = ["Barcelona", "Real Madrid",  "Other Teams"]
 				var color = d3.scaleOrdinal()
 				.domain(colorList)
-				.range(["#2E1A28", "ghostwhite",  "#1E694D","#81822F", "#EE855C"]) 	
+				.range(["#EDBB00", "#00529F",  "#ffffe0"]) 	
 
 				 var legend = scattersvg.selectAll(".legend")
 				.data(color.domain())
@@ -425,14 +427,6 @@
 				.attr("dy", ".35em")
 				.style("text-anchor", "end")
 				.text(function(d) { return d;})
-
-
-				
-			
-				
-
-        
-
 
                 })
 
