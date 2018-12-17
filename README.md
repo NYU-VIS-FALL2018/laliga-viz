@@ -7,10 +7,13 @@ Group 3
 
 
 ## About
-In this project we will investigate how competitiveness in Spain’s top soccer division, La Liga, has changed over the past 40 years. We will incorporate various data sets to visually analyze various concepts of competitiveness in soccer leagues.
+In this project we investigate how competitiveness in Spain’s top soccer division, La Liga, has changed over the past 40 years. We also see how various events are correlated with competitiveness.
+
+## Example Screenshot
+![Screenshot](example.png)
 
 
 ## More
 [DEMO](https://nyu-vis-fall2018.github.io/laliga-viz/.)
 
-[Project Description](project.pdf)
+[Project Description](Group_3_Proposal.pdf)
